@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profil Zaskiah</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0c3fc, #f9c5d1);
+      color: #333;
+      padding: 20px;
+      padding-top: 90px;
+      transition: background 0.5s, color 0.5s;
+      scroll-behavior: smooth;
+    }
+
+    /* ==== NAVBAR ==== */
+    nav {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 0 0 10px 10px;
+      padding: 12px 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease-in-out;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    nav.scrolled {
+      background: rgba(74, 59, 92, 0.9);
+      color: white;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #4a3b5c;
+      font-weight: bold;
+      padding: 8px 14px;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    nav.scrolled ul li a {
+      color: white;
+    }
+
+    nav ul li a:hover {
+      background-color: #f3d1f4;
+      color: #333;
+    }
+
+    /* ==== TOMBOL DARK MODE (bawah kanan) ==== */
+    .toggle-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      font-size: 16px;
+      background: #4a3b5c;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: 0.3s;
+      z-index: 1100;
+    }
+
+    .toggle-btn:hover {
+      background: #e6a4c5;
+      transform: scale(1.05);
+    }
+
+    /* ==== CARD ==== */
+    .card {
+      max-width: 900px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(15px);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease-out;
+    }
+
+    .card.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    img {
+      width: 180px;
+      border-radius: 15px;
+      display: block;
+      margin: 20px auto;
+      border: 3px solid white;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(230,164,197,0.8);
+    }
+
+    .typing {
+      text-align: center;
+      font-size: 2.5em;
+      font-weight: bold;
+      color: #5a4e74;
+      margin-bottom: 20px;
+      border-right: 3px solid #5a4e74;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing 4s steps(30, end) forwards, blink 0.8s infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    h2 {
+      background-color: #f3d1f4;
+      color: #4a3b5c;
+      font-size: 1.5em;
+      padding: 10px;
+      border-left: 5px solid #e6a4c5;
+      font-weight: bold;
+      border-radius: 5px;
+      margin: 50px 0 10px;
+    }
+
+    .info p {
+      margin: 10px 0;
+      font-size: 16px;
+      color: #444;
+      line-height: 1.6;
+      transition: 0.3s;
+      border-radius: 5px;
+      padding: 5px;
+    }
+
+    .info p:hover {
+      background: rgba(243, 209, 244, 0.6);
+    }
+
+    .motto {
+      font-style: italic;
+      background: rgba(255, 255, 255, 0.5);
+      padding: 10px;
+      border-left: 5px solid #e6a4c5;
+      margin: 20px 0;
+      color: #333;
+      border-radius: 5px;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table.jadwal {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 16px;
+      min-width: 600px;
+    }
+
+    table.jadwal th, 
+    table.jadwal td {
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 12px;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.3);
+      color: #333;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    table.jadwal th {
+      background-color: #f3d1f4;
+      color: #4a3b5c;
+    }
+
+    table.jadwal tr:hover td {
+      background-color: rgba(243, 209, 244, 0.6);
+      box-shadow: inset 0 0 10px rgba(230,164,197,0.8);
+    }
+
+    /* ==== DARK MODE ==== */
+    body.dark {
+      background: linear-gradient(to right, #2c2c54, #474787);
+      color: white;
+    }
+
+    body.dark nav {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    body.dark .toggle-btn {
+      background: #e6a4c5;
+      color: #2c2c54;
+    }
+
+    body.dark table.jadwal th {
+      background-color: #474787;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <ul>
+      <li><a href="#data-diri">Data Diri</a></li>
+      <li><a href="#informasi">Informasi</a></li>
+      <li><a href="#jadwal">Jadwal</a></li>
+      <li><a href="#mengenal">Mengenal HTML, CSS</a></li>
+      <li><a href="#tata-cara">Cara Membuat Website</a></li>
+      <li><a href="#kesan-pesan">Kesan & Pesan</a></li>
+    </ul>
+  </nav>
+
+  <!-- TOMBOL GANTI MODE -->
+  <button class="toggle-btn" onclick="document.body.classList.toggle('dark')">🌙 Ganti Mode</button>
+
+  <div class="card">
+    <h1 class="typing">Profil Mahasiswa</h1>
+    <img src="https://i.ibb.co.com/mFS01n8P/Whats-App-Image-2025-09-06-at-20-14-24.jpg" alt="Foto Mahasiswa" />
+
+    <h2 id="data-diri">Data Diri</h2>
+    <p><strong>Nama:</strong> Zaskiah Angreani</p>
+    <p><strong>NIM:</strong> 241401098</p>
+    <p><strong>Kom:</strong> B</p>
+    <p><strong>Hobi:</strong> Berenang dan Menonton Drama</p>
+    <div class="motto"><strong>Motto Hidup:</strong> "Gagal Berasal Dari Rasa Takut Yang Tidak Dilawan."</div>
+
+    <h2 id="informasi">Informasi Singkat</h2>
+    <div class="info">
+      <p>Halo! Perkenalkan saya Zaskiah Angreani, mahasiswa Fakultas Ilmu Komputer dan Teknologi Informasi jurusan S1 Ilmu Komputer. Saya alumni SMAN 5 Medan dan sekarang semester 3. Harapan saya setelah lulus kuliah adalah menjadi Pegawai Negeri Sipil (PNS).</p>
+    </div>
+
+    <h2 id="jadwal">Jadwal Kuliah</h2>
+    <div class="table-wrapper">
+      <table class="jadwal">
+        <tr>
+          <th>Hari</th>
+          <th>Mata Kuliah</th>
+          <th>Waktu</th>
+          <th>Ruang</th>
+          <th>Nama Dosen</th>
+        </tr>
+        <tr>
+          <td>Selasa</td>
+          <td>IELTS Preparation</td>
+          <td>08.20 - 10.00</td>
+          <td>D-101</td>
+          <td>Drs. Yulianus Harefa GradDipEd TESOL., Med TESOL</td>
+        </tr>
+        <tr>
+          <td>Selasa</td>
+          <td>Pengantar Kewirausahaan</td>
+          <td>10.30 - 13.00</td>
+          <td>Champion</td>
+          <td>Walad Altsani HR SE.,M.Ec.</td>
+        </tr>
+        <tr>
+          <td>Rabu</td>
+          <td>Basis Data</td>
+          <td>10.30 - 13.00</td>
+          <td>D-106</td>
+          <td>Dr. Dewi Sartika Br Ginting S.Kom.,M.Kom<br>Insidini Fawwaz M.Kom</td>
+        </tr>
+        <tr>
+          <td>Rabu</td>
+          <td>Wirausaha Digital</td>
+          <td>13.50 - 15.30</td>
+          <td>D-101</td>
+          <td>Dr. T. Henny Febriana Harumy S.Kom.,M.Kom<br>Dr. Fauzan Nurahmadi S.Kom.,MCs</td>
+        </tr>
+        <tr>
+          <td>Kamis</td>
+          <td>Struktur Data</td>
+          <td>08.00 - 10.30</td>
+          <td>D-105</td>
+          <td>Anandhini Medianty Nababan S.Kom.,M.T<br>Insidini Fawwaz M.Kom</td>
+        </tr>
+        <tr>
+          <td>Kamis</td>
+          <td>Pemrograman Web</td>
+          <td>10.30 - 13.00</td>
+          <td>D-105</td>
+          <td>Dr. Dewi Sartika Br Ginting S.Kom.,M.Kom<br>Nurrahmadayeni M.Kom</td>
+        </tr>
+        <tr>
+          <td>Kamis</td>
+          <td>Kecerdasan Buatan</td>
+          <td>13.00 - 15.30</td>
+          <td>D-101</td>
+          <td>Prof. Drs. Poltak Sihombing M.Kom.,Ph.D<br>Dr. Amalia S.T.,M.T.</td>
+        </tr>
+      </table>
+    </div>
+
+   <h2 id="mengenal">Mengenal HTML, CSS, Javascript dan Tailwind</h2>
+<p>
+<strong>HTML</strong> adalah bahasa dasar untuk membuat struktur sebuah halaman web, seperti menulis judul, paragraf, gambar, dan tautan.<br><br>
+<strong>CSS</strong> berfungsi untuk mengatur tampilan web agar lebih menarik — mulai dari warna, ukuran huruf, tata letak, hingga efek animasi sederhana.<br><br>
+<strong>JavaScript</strong> digunakan untuk membuat web menjadi interaktif, misalnya menampilkan pesan, membuat tombol berfungsi, atau mengganti tema dengan sekali klik.<br><br>
+<strong>Tailwind CSS</strong> adalah alat bantu modern untuk mempercepat desain web. Kita bisa menata tampilan hanya dengan menambahkan class tanpa harus menulis kode CSS panjang.
+</p>
+
+    <h2 id="tata-cara">Tata Cara Membuat Website Sederhana</h2>
+<ol>
+  <li>
+    <strong>Persiapkan alat kerja.</strong>  
+    Gunakan teks editor seperti <em>Visual Studio Code</em>, <em>Sublime Text</em>, atau <em>Notepad++</em>. Pastikan juga sudah punya browser seperti Google Chrome atau Edge untuk menampilkan hasilnya.
+  </li><br>
+
+  <li>
+    <strong>Buat folder proyek.</strong>  
+    Buat satu folder di komputer yang akan menjadi tempat semua file web disimpan. Misalnya, beri nama <code>website-ku</code>. Folder ini nantinya akan berisi file HTML, CSS, dan JavaScript.
+  </li><br>
+
+  <li>
+    <strong>Buat file utama.</strong>  
+    Di dalam folder tersebut, buat file baru dengan nama <code>index.html</code>. File ini akan menjadi halaman utama website. Tulis struktur dasar HTML seperti <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, dan <code>&lt;body&gt;</code>.
+  </li><br>
+
+  <li>
+    <strong>Tambahkan konten.</strong>  
+    Di dalam <code>&lt;body&gt;</code>, tulis elemen-elemen seperti judul, paragraf, gambar, dan tautan agar websitemu punya isi. Contohnya:
+    <pre><code>&lt;h1&gt;Selamat Datang di Web Saya&lt;/h1&gt;
+&lt;p&gt;Ini adalah website pertama saya.&lt;/p&gt;</code></pre>
+  </li><br>
+
+  <li>
+    <strong>Tambahkan tampilan (CSS).</strong>  
+    Buat file baru bernama <code>style.css</code> dan hubungkan ke <code>index.html</code> menggunakan tag <code>&lt;link&gt;</code>.  
+    Gunakan CSS untuk mengatur warna background, ukuran teks, jarak antar elemen, dan gaya huruf agar tampilannya lebih menarik.
+  </li><br>
+
+  <li>
+    <strong>Tambahkan interaksi (JavaScript).</strong>  
+    Buat file <code>script.js</code> lalu hubungkan ke HTML dengan tag <code>&lt;script&gt;</code>.  
+    JavaScript digunakan agar halamannya bisa melakukan aksi — misalnya, menampilkan pesan saat tombol diklik.
+  </li><br>
+
+  <li>
+    <strong>Lihat hasilnya.</strong>  
+    Simpan semua perubahan, lalu buka file <code>index.html</code> di browser. Jika tampilannya sudah sesuai, berarti website telah berhasil dibuat!  
+    kita bisa terus mengedit dan menambahkan fitur sesuai ide dan kreativitas.
+  </li>
+</ol>
+
+    <h2 id="kesan-pesan">Kesan dan Pesan Belajar Pemrograman Web</h2>
+    <p>Selama mengikuti mata kuliah Pemrograman Web yang dibimbing oleh Ibu Dr. Dewi Sartika Br Ginting, S.Kom., M.Kom, 
+      saya memperoleh banyak pengalaman dan wawasan baru, mulai dari memahami dasar pembuatan website hingga mampu mengembangkan proyek sendiri. 
+      Awalnya sulit memahami CSS dan JavaScript, tapi setelah latihan jadi semakin seru.
+      Saya mengucapkan terima kasih yang sebesar-besarnya atas ilmu, bimbingan, dan motivasi yang telah Ibu berikan. 
+      Semoga segala kebaikan dan dedikasi Ibu menjadi amal jariyah dan membawa keberkahan bagi semua mahasiswa yang ibu ajarkan.
+      </p>
+  </div>
+
+  <script>
+    // Efek animasi saat scroll
+    window.addEventListener('scroll', () => {
+      document.querySelectorAll('.card').forEach(el => {
+        const pos = el.getBoundingClientRect().top;
+        if (pos < window.innerHeight - 50) el.classList.add('show');
+      });
+
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 50) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    });
+
+    // Scroll halus ke JUDUL (h2)
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          const yOffset = -70; // agar judul tidak tertutup navbar
+          const y = targetEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
